@@ -137,6 +137,9 @@ void loop()
         Serial.print("Temperature = ");
         Serial.println(temperature);
 
+        Serial.print("Charge State = ");
+        Serial.println(chargeState < 128 ? "Charging" : (chargeState > 768 ? "Charged" : "Not Charging"));
+
         char accel[3];
         readAccel(accel);
         Serial.print("Acceleration = ");
