@@ -35,13 +35,14 @@ Notes:
 #define MODE_POWERUP            0
 #define MODE_OFF                1
 #define MODE_LOW                2
-#define MODE_HIGH               3
-#define MODE_KNOBBING           4
-#define MODE_KNOBBED            5
-#define MODE_BLINKING           6
-#define MODE_BLINKING_PREVIEW   7
-#define MODE_DAZZLING           8
-#define MODE_DAZZLING_PREVIEW   9
+#define MODE_MED                3
+#define MODE_HIGH               4
+#define MODE_KNOBBING           5
+#define MODE_KNOBBED            6
+#define MODE_BLINKING           7
+#define MODE_BLINKING_PREVIEW   8
+#define MODE_DAZZLING           9
+#define MODE_DAZZLING_PREVIEW  10
 
 // State
 byte mode = 0;
@@ -244,6 +245,12 @@ void loop()
     break;
   case MODE_LOW:
     if (btnDown && !newBtnDown)  // Button released
+      newMode = MODE_MED;
+    if (btnDown && newBtnDown && (time-btnTime)>500)  // Held
+      newMode = MODE_KNOBBING;
+    break;
+  case MODE_MED:
+    if (btnDown && !newBtnDown)  // Button released
       newMode = MODE_HIGH;
     if (btnDown && newBtnDown && (time-btnTime)>500)  // Held
       newMode = MODE_KNOBBING;
@@ -306,6 +313,13 @@ void loop()
       break;
     case MODE_LOW:
       Serial.println("Mode = low");
+      pinMode(DPIN_PWR, OUTPUT);
+      digitalWrite(DPIN_PWR, HIGH);
+      digitalWrite(DPIN_DRV_MODE, LOW);
+      analogWrite(DPIN_DRV_EN, 64);
+      break;
+    case MODE_MED:
+      Serial.println("Mode = medium");
       pinMode(DPIN_PWR, OUTPUT);
       digitalWrite(DPIN_PWR, HIGH);
       digitalWrite(DPIN_DRV_MODE, LOW);
