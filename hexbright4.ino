@@ -216,7 +216,7 @@ void loop()
       lastKnobAngle = angle;
       if (change >  PI) change -= 2.0*PI;
       if (change < -PI) change += 2.0*PI;
-      knob += -change * 40.0;
+      knob += -change * 80.0;
       if (knob < 0)   knob = 0;
       if (knob > 255) knob = 255;
 
