@@ -166,11 +166,18 @@ void loop()
     Serial.println(temperature);
     if (temperature > OVERTEMP)
     {
-      Serial.println("Overheat shutdown!");
-      mode = MODE_OFF;
+      Serial.println("Overheating!");
+
+      for (int i = 0; i < 6; i++)
+      {
+        digitalWrite(DPIN_DRV_MODE, LOW);
+        delay(100);
+        digitalWrite(DPIN_DRV_MODE, HIGH);
+        delay(100);
+      }
       digitalWrite(DPIN_DRV_MODE, LOW);
-      digitalWrite(DPIN_DRV_EN, LOW);
-      digitalWrite(DPIN_PWR, LOW);
+      
+      mode = MODE_LOW;
     }
   }
 
