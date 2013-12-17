@@ -254,6 +254,11 @@ void loop()
     digitalWrite(DPIN_DRV_EN, random(4)<1);
     break;
   }
+
+  // Periodically pull down the button's pin, since
+  // in certain hardware revisions it can float.
+  pinMode(DPIN_RLED_SW, OUTPUT);
+  pinMode(DPIN_RLED_SW, INPUT);
   
   // Check for mode changes
   byte newMode = mode;
