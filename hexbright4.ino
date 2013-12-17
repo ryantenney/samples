@@ -158,7 +158,7 @@ void loop()
   }
 
   // Check the temperature sensor
-  if (time-lastTempTime > 1000)
+  if (mode != MODE_OFF && time-lastTempTime > 1000)
   {
     lastTempTime = time;
     int temperature = analogRead(APIN_TEMP);
